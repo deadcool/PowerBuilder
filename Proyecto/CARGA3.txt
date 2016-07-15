@@ -1,0 +1,17 @@
+administrador
+usuario
+ubicacion
+autoridad
+tags
+detalles
+universidad
+facultadxsede
+escuela
+areasuniversidad
+puerta
+relacion_areasunivdetalle
+relacion_univdetalle
+relacion_faculxsededetalle
+relacion_escueldetalle
+indice_noticias
+comentarios

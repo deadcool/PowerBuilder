@@ -1,0 +1,59 @@
+//Actualizar la informacion de la datawindow
+if dw_2.update()=-1 then
+   dw_2.setfocus()
+   MessageBox("Error", "Informacion no almacenada")
+   return
+else  // Se almacenaron los datos de la  DATAWINDOW
+        // proceder a guardar la imagen para este registro
+   //Datos a utilizar para almacenar la imagen
+   integer vueltas // Esta nos va a servir para barrer todos los bytes de la imagen
+   blob b_blob, b_blob_total // Blob variables que vamos a utilizar para la imagen
+   long longitud // Longitud de la imagen
+   int archivo, bytes_leidos,i 
+   
+   // Obtenemos la longitud de la imagen que esta en el control picture
+       longitud = FileLength(p_mostrar.picturename)
+   
+   // Calculamos la longitud para leer la imagen por partes   
+   IF longitud > 32765 THEN 
+       IF Mod(longitud, 32765) = 0 THEN 
+           vueltas = longitud/32765 
+       ELSE 
+           vueltas = (longitud/32765) + 1 
+       END IF 
+   ELSE 
+       vueltas = 1 
+   END IF 
+   
+   // Abrimos el archivo en modo lectura 
+   archivo = FileOpen(p_mostrar.picturename, StreamMode!, Read!, LockRead!) 
+   
+   //Leemos los bytes del archivo
+   FOR i = 1 to vueltas 
+       bytes_leidos = FileRead(archivo, b_blob) 
+       b_blob_total = b_blob_total + b_blob 
+   NEXT 
+   
+   // Cerramos el archivo 
+   FileClose(archivo) 
+   
+ // Obtenemos el codigo del registro donde vamos a guardar la imagen   
+ // ls_codigo = dw_datos.getitemstring(dw_datos.getrow(),"codigo")
+   
+ // Actualizamos la columna de la imagen para el registro correspondiente
+ // al CODIGO, para esto usamos la funcion UPDATEBLOB
+   
+	 
+	
+   UPDATEBLOB ubicacion 
+                 SET foto = :b_blob_total 
+               where idUbicacion = :s_idubicacion ; 
+   
+  //Verificamos si no hubo error
+   if sqlca.sqldbcode <> 0 then
+       MessageBox ("No se Pudo Actualizar!", sqlca.sqlerrtext)
+       return
+   end if
+end if
+
+// Fin del codigo guardar.

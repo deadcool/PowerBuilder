@@ -1,0 +1,29 @@
+// Recuperar y desplegar imagen
+blob b_dibujo 
+int a 
+dec longi
+//string ls_codigo
+
+//ls_codigo = This.GetItemString(This.getrow(), "codigo")
+
+SELECTBLOB foto 
+             into :b_dibujo 
+      from ubicacion
+     where idUbicacion =: s_idubicacion ; 
+	  	  
+
+  IF isnull(b_dibujo) then
+     // Si no tiene imagen mostrar una imagen que diga NOIMAGE
+     p_mostrar.PictureName =  "C:\Users\Computer\Desktop\Proyecto de Arquitectura\NoImagen.jpg"
+  end if
+     
+if sqlca.sqldbcode <> 0 then
+     MessageBox ("error al recuperar", sqlca.sqlerrtext)
+     return
+end if
+
+//Desplegar la imagen
+p_mostrar.SetRedraw(true) 
+a = p_mostrar.SetPicture(b_dibujo) 
+p_mostrar.SetRedraw(TRUE) 
+

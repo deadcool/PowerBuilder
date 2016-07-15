@@ -1,0 +1,28 @@
+//Todo el siguiente codigo en el evento click del CommandButton, "Elegir Imagen"
+
+//Definir parametros para ventana que muestra la carpeta de las imagenes
+String   s_Path, s_File, s_Type, s_Mask
+Integer   i_pos
+s_Type = "*.bmp,*.jpg"
+s_Mask = "Bitmap Files (*.bmp), *.bmp, JPG Files (*.jpg),*.jpg"
+
+//Obtener el nombre de la imagen.
+If GetFileOpenName("Seleccionar Archivo de Imagen", s_Path, s_File, & 
+s_Type, s_Mask) = 1 Then
+   i_pos = Pos(s_Path, s_File)
+End If
+
+/// mostrar la imagen
+Integer   i_Files, i_Cnt, i_Index
+string s_Ruta
+
+//Para el caso el control IMAGE se llama P_MOSTRAR
+//y a la propiedad de la imagen le asignamos la ruta del
+//archivo que acabamos de seleccionar.
+//Se coloca la propiedad OriginalSize falsa porque asi todas las imagenes
+//las coloca del tamaño de mi control, no cambia de tamaño segun el tamaño de 
+//la imagen.
+p_mostrar.PictureName =  s_Path
+p_mostrar.OriginalSize = False
+
+// Fin Evento Click boton CommandButton.
